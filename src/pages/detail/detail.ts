@@ -18,12 +18,22 @@ export class DetailPage {
   public post: any = [];
   public isLoading: boolean=false;
   public relatedItems: any=[];
+  public comment: any=[];
+  public reply:any=[];
+  public post_id: number;
+  //  a_name:string='';
+  //  a_url:string='';
+  //  r_content:any [];
+  //  r_data: string='';
+  //  com_count:number=0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: ApiProvider) {
     this.post = navParams.get('post');
+    console.log(this.post.id);
   }
 
   ionViewDidLoad() {
+    this.getComment();
     this.getRelated();
   }
   getRelated() {
@@ -38,6 +48,26 @@ export class DetailPage {
       this.isLoading=false;
       });
     }
+  }
+  getComment() {
+    
+    this.api.get('comments?post='+ this.post.id)
+    .subscribe((data:any) => {
+      if(data.length==0) {
+        return;
+      }
+      data.forEach(element => {
+       return element.author_name,
+        element.date,
+        element.content.rendered,
+        element.author_avatar_urls[48],
+        data.length;
+      });
+      
+
+      
+
+    });
   }
 
  openDetail(item) {

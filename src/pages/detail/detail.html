@@ -26,6 +26,25 @@
     </ion-row>
   </div>
   <div padding [innerHTML]= "post.content.rendered"></div>
+  <div padding *ngFor="let reply of replies">
+    
+    <ion-row>
+      <ion-badge >
+        <img src="{{post._embedded.replies[0][reply].author_avatar_urls[48]}}"/>
+      </ion-badge>
+      <ion-badge color="light">
+        <ion-icon name= "time"></ion-icon>
+        {{post._embedded.replies[0][reply].date | date: "dd.MM.yyy / HH:mm"}}
+      </ion-badge>
+      <ion-badge color="light">
+        <ion-icon></ion-icon>
+        {{post._embedded.replies[0][reply].author_name}}
+      </ion-badge>
+    </ion-row>
+    <div padding [innerHtml]= "post._embedded.replies[0][reply].content.rendered">
+
+    </div>
+  </div>
   <h2 padding-left>Related Posts</h2>
   <div *ngIf="isLoading" text-center padding>
     <ion-spinner></ion-spinner>

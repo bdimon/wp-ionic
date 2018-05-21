@@ -19,7 +19,7 @@
 
 <ion-content padding>
   <ion-card *ngFor = "let item of items" (click)="openDetail(item)">
-    <img  src = "{{item._embedded['wp:featuredmedia'][0].media_details.sizes.thumbnail.source_url}}"/>
+    <!-- <img  src = "{{item._embedded['wp:featuredmedia'][0].media_details.sizes.thumbnail.source_url}}"/> -->
    <ion-card-content>
      <ion-card-title align="center" [innerHTML]= "item.title.rendered"></ion-card-title>
      <ion-row>
@@ -36,5 +36,5 @@
  <div *ngIf="isLoading" text-center padding>
    <ion-spinner></ion-spinner>
  </div>
- <button *ngIf="showLoadMore" ion-button full (click) = "getPosts()">Load More </button>
+ <!-- <button *ngIf="showLoadMore" ion-button full (click) = "getPosts()">Load More </button> -->
 </ion-content>

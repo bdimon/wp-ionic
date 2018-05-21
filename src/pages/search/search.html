@@ -1,0 +1,40 @@
+<!--
+  Generated template for the SearchPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-input type="search" [(ngModel)]="searchQuery" (change)="onSearch()" placeholder="Search..."></ion-input>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="clearSearch()" *ngIf="searchQuery.length>3">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+
+<ion-content padding>
+  <ion-card *ngFor = "let item of items" (click)="openDetail(item)">
+    <img  src = "{{item._embedded['wp:featuredmedia'][0].media_details.sizes.thumbnail.source_url}}"/>
+   <ion-card-content>
+     <ion-card-title align="center" [innerHTML]= "item.title.rendered"></ion-card-title>
+     <ion-row>
+       <ion-badge color="secondary">
+         {{api.getCatName(item.categories[0])}}
+       </ion-badge>
+       <ion-badge color="light">
+         <ion-icon name= "time"></ion-icon>
+         {{item.date | date: "dd.MM.yyy / HH:mm"}}
+       </ion-badge>
+     </ion-row>
+   </ion-card-content>
+ </ion-card>
+ <div *ngIf="isLoading" text-center padding>
+   <ion-spinner></ion-spinner>
+ </div>
+ <button *ngIf="showLoadMore" ion-button full (click) = "getPosts()">Load More </button>
+</ion-content>

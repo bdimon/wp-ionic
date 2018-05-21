@@ -17,7 +17,7 @@ import { DetailPage } from './../detail/detail';
 })
 export class SearchPage {
   public items: any = [];
-  private per_page: number= 8;
+  private per_page: number= 5;
   private page: number=1;
   private showLoadMore:boolean = false;
   private isLoading:boolean = false;

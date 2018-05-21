@@ -36,7 +36,7 @@ export class HomePage {
       }
       let url:string='posts?_embed&per_page='+this.per_page+'&page='+this.page;
       url+=this.category_id!=0? '&categories='+this.category_id: '';
-      url+=this.sort=='1'? '&order-asc':this.sort=='2' ? '&orderby=title&order=asc':this.sort=='3' ? '&orderby=title&order=desc': '';
+      url+=this.sort==='1'? '&order=asc':this.sort==='2' ? '&orderby=title&order=asc':this.sort==='3' ? '&orderby=title&order=desc': '';
     this.api.get(url)
     .subscribe((data:any) => {
       this.isLoading=false;

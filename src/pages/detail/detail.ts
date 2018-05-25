@@ -24,17 +24,19 @@ export class DetailPage {
   public per_page:number = 5;
   public page:number = 1;
   private sort:string='1';
-  public commentsCount:number=0;
+  // public commentsCount:number=0;
   // public showMore: boolean = false;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: ApiProvider) {
     this.post = navParams.get('post');
+    console.log(this.post);
+    
     }
     
   ionViewWillEnter() {
     // this.getPost();
         
-    // this.getComments();
+    this.getComments();
     
   }
 
@@ -55,7 +57,7 @@ export class DetailPage {
     if(!this.isLoading) {
       this.isLoading=true;
       if(infiniteScroll!=null && infiniteScroll.ionRefresh) {
-        this.page;
+        this.page = 1;
       }    
       let url:string='comments?_embed&post=' + this.post.id + '&per_page=' + this.per_page + '&page='+ this.page;
       url += this.sort=='1'? '&order=asc': '';
@@ -66,6 +68,7 @@ export class DetailPage {
       if(data.length===this.per_page){
         this.page++;
         }
+        console.log(this.comments);
       if(infiniteScroll!=null){
         infiniteScroll.complete();
         }

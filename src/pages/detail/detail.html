@@ -35,11 +35,24 @@
     </ion-select>
   </ion-item>
   </ion-row>
+  <ion-list *ngIf ="this.comments">
+    <ion-item-divider>Comments</ion-item-divider>
+    <ion-item text-wrap *ngFor="let comment of comments">
+      <ion-avatar>
+        <img src="{{comment.author_avatar_urls[48]}}"/>
+      </ion-avatar>
+      <h2>{{comment.author_name}}</h2>
+      <p [innerHtml]="comment.content.rendered"></p>
+      <h4 light>{{comment.date}}</h4>
+      
+    </ion-item>
+    
+  </ion-list>
   
-  <ion-refresher (ionRefresh)="getComments($event)">
+  <!-- <ion-refresher (ionRefresh)="getComments($event)">
     <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-  <div padding *ngFor="let comment of comments">
+  </ion-refresher> -->
+  <!-- <div padding *ngFor="let comment of comments">
   <ion-row >
       <ion-badge >
         <img src='{{comment.author_avatar_urls[24]}}'/>
@@ -55,15 +68,16 @@
       
     </ion-row>
     <div padding [innerHtml]= "comment.content.rendered"></div>
-  </div>
-  
-  <div *ngIf="isLoading && page==1"  text-center padding>
+    <div *ngIf="isLoading && page==1"  text-center padding>
     <ion-spinner></ion-spinner>
   </div>
 
   <ion-infinite-scroll (ionInfinite)="getComments($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
+  </div> -->
+  
+  
 
   </ion-content>
    

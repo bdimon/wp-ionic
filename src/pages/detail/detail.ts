@@ -15,62 +15,78 @@ import { ApiProvider } from '../../providers/api/api';
   templateUrl: 'detail.html',
 })
 export class DetailPage {
+  public items: any =[];
   public post: any = [];
   public isLoading: boolean=false;
-  public relatedItems: any=[];
-  public comment: any=[];
-  public reply:any=[];
-  public post_id: number;
-  //  a_name:string='';
-  //  a_url:string='';
-  //  r_content:any [];
-  //  r_data: string='';
-  //  com_count:number=0;
-
+  // public relatedItems: any=[];
+  public comments: any=[];
+  // public postid: number;
+  public per_page:number = 5;
+  public page:number = 1;
+  private sort:string='1';
+  public commentsCount:number=0;
+  // public showMore: boolean = false;
+  
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: ApiProvider) {
     this.post = navParams.get('post');
-    console.log(this.post.id);
+    }
+    
+  ionViewWillEnter() {
+    // this.getPost();
+        
+    // this.getComments();
+    
   }
 
-  ionViewDidLoad() {
-    this.getComment();
-    this.getRelated();
-  }
-  getRelated() {
-    if(!(this.isLoading)) {
+//   getPost() {
+          
+//       let url:string='posts?_embed&post='+this.post.id;
+//       this.api.get(url)
+//     .subscribe((data:any) => {
+//        this.items = data;
+      
+//     }, (error) => {
+//       this.isLoading=false;
+      
+//     });
+// }
+  
+  getComments(infiniteScroll=null) {
+    if(!this.isLoading) {
       this.isLoading=true;
-    this.api.get('posts?_embed&categories=' + this.post.categories[0])
-    .subscribe((data:any) => {
+      if(infiniteScroll!=null && infiniteScroll.ionRefresh) {
+        this.page;
+      }    
+      let url:string='comments?_embed&post=' + this.post.id + '&per_page=' + this.per_page + '&page='+ this.page;
+      url += this.sort=='1'? '&order=asc': '';
+      this.api.get(url)
+      .subscribe((data:any) => {
       this.isLoading=false;
-      this.relatedItems = data;
-
-      }, (error) => {
-      this.isLoading=false;
+      this.comments = infiniteScroll!=null && infiniteScroll.ionRefresh ? data: this.comments.concat(data);
+      if(data.length===this.per_page){
+        this.page++;
+        }
+      if(infiniteScroll!=null){
+        infiniteScroll.complete();
+        }
+      },(error) => {
+        this.isLoading=false;
+        if(infiniteScroll!=null){
+          infiniteScroll.complete();
+        }
       });
     }
   }
-  getComment() {
-    
-    this.api.get('comments?post='+ this.post.id)
-    .subscribe((data:any) => {
-      if(data.length==0) {
-        return;
-      }
-      data.forEach(element => {
-       return element.author_name,
-        element.date,
-        element.content.rendered,
-        element.author_avatar_urls[48],
-        data.length;
-      });
-      
 
-      
-
-    });
+  changeSort() {
+    console.log(this.sort);
+    this.comments=[];
+    this.page=1;
+    // this.showMore=false;
+    this.getComments();
   }
 
- openDetail(item) {
-  this.navCtrl.push(DetailPage, {post:item})
- }
+//  openDetail(item) {
+//    this.navCtrl.push(DetailPage, {post:item});
+//   }
 }

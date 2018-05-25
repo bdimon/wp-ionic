@@ -9,8 +9,9 @@ import { Injectable } from '@angular/core';
 */
 @Injectable()
 export class ApiProvider {
-  private API_URL: string = 'http://defence-line.org/wp-json/wp/v2/';
+  private API_URL: string = 'https://poststatus.com/wp-json/wp/v2/';
   public Categories: any = [];
+	public comments:any=[];
 
   constructor(public http: HttpClient) {
     
@@ -31,7 +32,5 @@ export class ApiProvider {
       }
     });
     return cat_name;
-    
   }
-
 }

@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title text-center padding [innerHTML]= "post.title.rendered"></ion-title>
+    <!-- <ion-title text-center padding [innerHTML]= "post.title.rendered"></ion-title> -->
   </ion-navbar>
 </ion-header>
 
@@ -26,32 +26,54 @@
     </ion-row>
   </div>
   <div padding [innerHTML]= "post.content.rendered"></div>
-  <div padding *ngFor="let reply of replies">
-    
-    <ion-row>
+  <ion-row>
+    <ion-item>
+    <ion-label text-right>Sort</ion-label>
+    <ion-select [(ngModel)]="sort" (ionChange)="changeSort()">
+      <ion-option value="0">New to old</ion-option>
+      <ion-option value="1">Old to new</ion-option>
+    </ion-select>
+  </ion-item>
+  </ion-row>
+  
+  <ion-refresher (ionRefresh)="getComments($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div padding *ngFor="let comment of comments">
+  <ion-row >
       <ion-badge >
-        <img src="{{post._embedded.replies[0][reply].author_avatar_urls[48]}}"/>
+        <img src='{{comment.author_avatar_urls[24]}}'/>
       </ion-badge>
       <ion-badge color="light">
         <ion-icon name= "time"></ion-icon>
-        {{post._embedded.replies[0][reply].date | date: "dd.MM.yyy / HH:mm"}}
+        {{comment.date | date: "dd.MM.yyy / HH:mm"}}
       </ion-badge>
       <ion-badge color="light">
         <ion-icon></ion-icon>
-        {{post._embedded.replies[0][reply].author_name}}
+        {{comment.author_name}}
       </ion-badge>
+      
     </ion-row>
-    <div padding [innerHtml]= "post._embedded.replies[0][reply].content.rendered">
-
-    </div>
+    <div padding [innerHtml]= "comment.content.rendered"></div>
   </div>
-  <h2 padding-left>Related Posts</h2>
+  
+  <div *ngIf="isLoading && page==1"  text-center padding>
+    <ion-spinner></ion-spinner>
+  </div>
+
+  <ion-infinite-scroll (ionInfinite)="getComments($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  </ion-content>
+   
+  <!-- <h2 padding-left>Related Posts</h2>
   <div *ngIf="isLoading" text-center padding>
     <ion-spinner></ion-spinner>
   </div>
   <div padding>
     <ion-card *ngFor = "let item of relatedItems" (click)="openDetail(item)">
-      <!-- <img  src = "{{item._embedded['wp:featuredmedia'][0].media_details.sizes.thumbnail.source_url}}"/> -->
+       <img  src = "{{item._embedded['wp:featuredmedia'][0].media_details.sizes.thumbnail.source_url}}"/> 
      <ion-card-content>
        <ion-card-title align="center" [innerHTML]= "item.title.rendered"></ion-card-title>
        <ion-row>
@@ -64,6 +86,6 @@
          </ion-badge>
        </ion-row>
      </ion-card-content>
-   </ion-card>
-  </div>
-</ion-content>
+   </ion-card> -->
+  <!-- </div> -->
+  

@@ -24,12 +24,11 @@
     </ion-select>
   </ion-item>
   </ion-row>
-  <ion-refresher (ionRefresh)="getPosts($event)">
+  <ion-refresher (ionRefresh)=`getPosts($event)`>
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-card *ngFor = "let item of items" (click)="openDetail(item)" >
-   <!-- <img  src = "{{item._embedded['wp:featuredmedia'][0].media_details.sizes.thumbnail.source_url}}"/> -->
-  <ion-card-content>
+  <ion-card *ngFor = "let item of items" (click)="openDetail(item)">
+   <ion-card-content>
     <ion-card-title align="center" [innerHTML]= "item.title.rendered"></ion-card-title>
     <ion-row>
       <ion-badge color="secondary">
@@ -42,10 +41,10 @@
     </ion-row>
   </ion-card-content>
 </ion-card>
-<div *ngIf="isLoading && page==1"  text-center padding>
+<div *ngIf = `isLoading && page==1`  text-center padding>
   <ion-spinner></ion-spinner>
 </div>
-<ion-infinite-scroll (ionInfinite)="getPosts($event)">
+<ion-infinite-scroll (ionInfinite) ="getPosts($event)">
   <ion-infinite-scroll-content></ion-infinite-scroll-content>
 </ion-infinite-scroll>
 </ion-content>

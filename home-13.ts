@@ -12,7 +12,7 @@ export class HomePage {
   public items: any = [];
   private per_page: number= 5;
   private page: number=1;
-  private showMore:boolean = false;
+  private showLoadMore:boolean = false;
   private isLoading:boolean = false;
   private category_id:number=0;
   private sort:string='0';
@@ -28,39 +28,36 @@ export class HomePage {
 
   }
 
-  getPosts(infiniteScroll=null) {
+  getPosts() {
     if(!(this.isLoading)) {
       this.isLoading=true;
-      if(infiniteScroll!=null && infiniteScroll.ionRefresh) {
-        this.page=1;
-      }
       let url:string='posts?_embed&per_page='+this.per_page+'&page='+this.page;
       url+=this.category_id!=0? '&categories='+this.category_id: '';
-      url+=this.sort=='1'? '&order=asc':this.sort=='2' ? '&orderby=title&order=asc':this.sort=='3' ? '&orderby=title&order=desc': '';
+      url+=this.sort=='1'? '&order-asc':this.sort=='2' ? '&orderby=title&order=asc':this.sort=='3' ? '&orderby=title&order=desc': '';
     this.api.get(url)
     .subscribe((data:any) => {
-      this.isLoading=false;
-      this.items = infiniteScroll!=null && infiniteScroll.ionRefresh ? data: this.items.concat(data);
-      if(data.length===this.per_page){
+      this.isLoading = false;
+      this.items = this.items.concat(data);
+      if(data.length === this.per_page){
         this.page++;
-        }
-      
-      if(infiniteScroll!=null){
-        infiniteScroll.complete();
+        this.showLoadMore=true;
+      }else{
+        this.showLoadMore=false;
       }
     }, (error) => {
       this.isLoading=false;
-      if(infiniteScroll!=null){
-        infiniteScroll.complete();
+      if(error.error.code==='rest_post_invalid_page_number') {
+        this.showLoadMore=false;
       }
     });
   }
 }
+
   changeSort() {
     console.log(this.sort);
     this.items=[];
     this.page=1;
-    this.showMore=false;
+    this.showLoadMore=false;
     this.getPosts();
   }
 

@@ -1,0 +1,51 @@
+{
+	"info": {
+		"_postman_id": "b7cc163f-bf91-46f4-ba85-90eee2fc47f8",
+		"name": "doslova",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "doslova.com/wp-json/wp/v2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": "doslova.com/wp-json/wp/v2"
+			},
+			"response": []
+		},
+		{
+			"name": "doslova.com/wp-json/wp/v2/posts?_embed&per_page=20",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "doslova.com/wp-json/wp/v2/posts?_embed&per_page=20",
+					"host": [
+						"doslova",
+						"com"
+					],
+					"path": [
+						"wp-json",
+						"wp",
+						"v2",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "_embed",
+							"value": null
+						},
+						{
+							"key": "per_page",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

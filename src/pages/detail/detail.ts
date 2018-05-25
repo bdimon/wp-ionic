@@ -61,14 +61,15 @@ export class DetailPage {
       }    
       let url:string='comments?_embed&post=' + this.post.id + '&per_page=' + this.per_page + '&page='+ this.page;
       url += this.sort=='1'? '&order=asc': '';
+      console.log(url);
       this.api.get(url)
       .subscribe((data:any) => {
       this.isLoading=false;
       this.comments = infiniteScroll!=null && infiniteScroll.ionRefresh ? data: this.comments.concat(data);
-      if(data.length===this.per_page){
+      if(data.length>=this.per_page){
         this.page++;
-        }
-        console.log(this.comments);
+        
+        console.log(this.comments);}
       if(infiniteScroll!=null){
         infiniteScroll.complete();
         }

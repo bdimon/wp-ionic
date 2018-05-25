@@ -48,6 +48,13 @@
     </ion-item>
     
   </ion-list>
+  <div *ngIf="isLoading && page==1"  text-center padding>
+    <ion-spinner></ion-spinner>
+  </div>
+
+  <ion-infinite-scroll (ionInfinite)="getComments($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
   
   <!-- <ion-refresher (ionRefresh)="getComments($event)">
     <ion-refresher-content></ion-refresher-content>

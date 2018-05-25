@@ -7,8 +7,8 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <!-- <img  src = "{{post._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url}}"/> -->
+<ion-content padding>
+<!-- <img  src = "{{post._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url}}"/> -->
   <div padding>
     <h1 text-center [innerHTML]= "post.title.rendered"></h1>
     <ion-row>
@@ -35,8 +35,13 @@
     </ion-select>
   </ion-item>
   </ion-row>
+  <ion-refresher (ionRefresh)="api.getComments($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-list *ngIf ="this.comments">
+    
     <ion-item-divider>Comments</ion-item-divider>
+    
     <ion-item text-wrap *ngFor="let comment of comments">
       <ion-avatar>
         <img src="{{comment.author_avatar_urls[48]}}"/>
@@ -46,15 +51,22 @@
       <h4 light>{{comment.date}}</h4>
       
     </ion-item>
-    
+    <div *ngIf="isLoading && page==1"  text-center padding>
+    <ion-spinner></ion-spinner>
+  </div>
+  <ion-infinite-scroll (ionInfinite)="api.getComments($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
   </ion-list>
-  <div *ngIf="isLoading && page==1"  text-center padding>
+  
+
+  <!-- <div *ngIf="isLoading && page==1"  text-center padding>
     <ion-spinner></ion-spinner>
   </div>
 
-  <ion-infinite-scroll (ionInfinite)="getComments($event)">
+  <ion-infinite-scroll (ionInfinite)="getMoreComments($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+  </ion-infinite-scroll> -->
   
   <!-- <ion-refresher (ionRefresh)="getComments($event)">
     <ion-refresher-content></ion-refresher-content>

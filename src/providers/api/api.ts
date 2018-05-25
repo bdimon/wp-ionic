@@ -9,9 +9,10 @@ import { Injectable } from '@angular/core';
 */
 @Injectable()
 export class ApiProvider {
-  private API_URL: string = 'https://poststatus.com/wp-json/wp/v2/';
+  private API_URL: string = 'http://defence-line.org/wp-json/wp/v2/';
   public Categories: any = [];
-	public comments:any=[];
+  public comments:any=[];
+  public post: any=[];
 
   constructor(public http: HttpClient) {
     
@@ -32,5 +33,20 @@ export class ApiProvider {
       }
     });
     return cat_name;
+  }
+  getComments(post_id:number, page:number=1, sort:string) {
+    let url:string='comments?_embed&page='+page + '&post=' + post_id;
+    url+=sort=='1'? '&order=asc': '';
+    // console.log(url);
+    this.get(url)
+    .subscribe((data:any) => {
+      console.log(data);
+      if(this.comments.length===10){
+      this.comments = this.comments.concat(data);
+      page++;
+        }
+    },(error) => {
+      console.log("error");
+    });
   }
 }

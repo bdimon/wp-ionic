@@ -9,7 +9,8 @@
 
 <ion-content padding>
 <!-- <img  src = "{{post._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url}}"/> -->
-  <div padding>
+
+<div padding>
     <h1 text-center [innerHTML]= "post.title.rendered"></h1>
     <ion-row>
       <ion-badge color="secondary">
@@ -24,101 +25,37 @@
         {{post._embedded.author[0].name}}
       </ion-badge>
     </ion-row>
+    <div padding [innerHTML]= "post.content.rendered"></div>
   </div>
-  <div padding [innerHTML]= "post.content.rendered"></div>
-  <ion-row>
-    <ion-item>
+  
+  <!-- <ion-row>
     <ion-label text-right>Sort</ion-label>
     <ion-select [(ngModel)]="sort" (ionChange)="changeSort()">
       <ion-option value="0">New to old</ion-option>
       <ion-option value="1">Old to new</ion-option>
     </ion-select>
-  </ion-item>
-  </ion-row>
-  <ion-refresher (ionRefresh)="api.getComments($event)">
+  </ion-row> -->
+  <!-- <ion-refresher ion-item (ionRefresh)="api.getMoreComments($event)">
     <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-  <ion-list *ngIf ="this.comments">
-    
+  </ion-refresher> -->
+  <div *ngIf ="this.comments">
     <ion-item-divider>Comments</ion-item-divider>
-    
-    <ion-item text-wrap *ngFor="let comment of comments">
+    <ion-list text-wrap *ngFor="let comment of comments">
       <ion-avatar>
         <img src="{{comment.author_avatar_urls[48]}}"/>
       </ion-avatar>
       <h2>{{comment.author_name}}</h2>
+      <h4 light>{{comment.date | date: "dd.MM.yyy / HH:mm"}}</h4>
       <p [innerHtml]="comment.content.rendered"></p>
-      <h4 light>{{comment.date}}</h4>
-      
-    </ion-item>
-    <div *ngIf="isLoading && page==1"  text-center padding>
-    <ion-spinner></ion-spinner>
+    </ion-list>
   </div>
-  <ion-infinite-scroll (ionInfinite)="getComments($event)">
-    <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
-  </ion-list>
-  
-
-  <!-- <div *ngIf="isLoading && page==1"  text-center padding>
+  <button ion-button full (click)="getMoreComments()">Load more...</button>
+    <!-- <div *ngIf="isLoading && page==1"  text-center padding>
     <ion-spinner></ion-spinner>
-  </div>
-
-  <ion-infinite-scroll (ionInfinite)="getMoreComments($event)">
+  </div> -->
+  <!-- <ion-infinite-scroll (ionInfinite)="getMoreComments($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll> -->
-  
-  <!-- <ion-refresher (ionRefresh)="getComments($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher> -->
-  <!-- <div padding *ngFor="let comment of comments">
-  <ion-row >
-      <ion-badge >
-        <img src='{{comment.author_avatar_urls[24]}}'/>
-      </ion-badge>
-      <ion-badge color="light">
-        <ion-icon name= "time"></ion-icon>
-        {{comment.date | date: "dd.MM.yyy / HH:mm"}}
-      </ion-badge>
-      <ion-badge color="light">
-        <ion-icon></ion-icon>
-        {{comment.author_name}}
-      </ion-badge>
-      
-    </ion-row>
-    <div padding [innerHtml]= "comment.content.rendered"></div>
-    <div *ngIf="isLoading && page==1"  text-center padding>
-    <ion-spinner></ion-spinner>
-  </div>
-
-  <ion-infinite-scroll (ionInfinite)="getComments($event)">
-    <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
-  </div> -->
-  
-  
-
   </ion-content>
    
-  <!-- <h2 padding-left>Related Posts</h2>
-  <div *ngIf="isLoading" text-center padding>
-    <ion-spinner></ion-spinner>
-  </div>
-  <div padding>
-    <ion-card *ngFor = "let item of relatedItems" (click)="openDetail(item)">
-       <img  src = "{{item._embedded['wp:featuredmedia'][0].media_details.sizes.thumbnail.source_url}}"/> 
-     <ion-card-content>
-       <ion-card-title align="center" [innerHTML]= "item.title.rendered"></ion-card-title>
-       <ion-row>
-         <ion-badge color="secondary">
-           {{api.getCatName(item.categories[0])}}
-         </ion-badge>
-         <ion-badge color="light">
-           <ion-icon name= "time"></ion-icon>
-           {{item.date | date: "dd.MM.yyy / HH:mm"}}
-         </ion-badge>
-       </ion-row>
-     </ion-card-content>
-   </ion-card> -->
-  <!-- </div> -->
   

@@ -31,43 +31,40 @@ export class DetailPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: ApiProvider) {
     this.post = navParams.get('post');
     console.log(this.post);
-    this.api.getComments(this.post.id, this.page, this.sort);
+    this.getPost();
+    // this.api.getComments(this.post.id, this.page, this.sort);
     }
     
   // ionViewDidLoad() {
-  //   // this.getPost();
+    
         
     
-  //   // this.getMoreComments();
+  // //   // this.getMoreComments();
     
   // }
 
-//   getPost() {
+  getPost() {
           
-//       let url:string='posts?_embed&post='+this.post.id;
-//       this.api.get(url)
-//     .subscribe((data:any) => {
-//        this.items = data;
+      let url:string='posts?_embed&post='+this.post.id;
+      this.api.get(url)
+    .subscribe((data:any) => {
+       this.items = data;
       
-//     }, (error) => {
-//       this.isLoading=false;
+    }, (error) => {
+      this.isLoading=false;
       
-//     });
-// }
-// getComments() {
-//   let url:string='comments?_embed&post=' + this.post.id  + '&page='+ this.page;
-//   url += this.sort=='1'? '&order=asc': '';
-//   // console.log(url);
-//   this.api.get(url)
-//   .subscribe((data:any) => {
-//   this.comments = data;
-//   console.log(this.comments);
-//   },(error) => {
-//     console.log("error");
-    
-//   });
+    });
+}
+getComments() {
+  let url:string='comments?_embed&page='+this.page + '&post=' + this.post.id;
+    url+=this.sort=='1'? '&order=asc': '';
+  console.log(url);
+  this.api.get(url).subscribe((data:any) => {
+    this.comments = data;
+  })
+//  
 
-// }
+}
 
 // getMoreComments(infiniteScroll=null) {
 //   if(!(this.isLoading)) {
@@ -125,7 +122,7 @@ export class DetailPage {
     this.comments=[];
     this.page=1;
     // this.showMore=false;
-    this.api.getComments(this.post.id, this.page, this.sort);
+    this.getComments();
   }
 
 //  openDetail(item) {

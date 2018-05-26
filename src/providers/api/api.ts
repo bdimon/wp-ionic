@@ -34,19 +34,20 @@ export class ApiProvider {
     });
     return cat_name;
   }
-  getComments(post_id:number, page:number=1, sort:string) {
-    let url:string='comments?_embed&page='+page + '&post=' + post_id;
-    url+=sort=='1'? '&order=asc': '';
-    // console.log(url);
-    this.get(url)
-    .subscribe((data:any) => {
-      console.log(data);
-      if(this.comments.length===10){
-      this.comments = this.comments.concat(data);
-      page++;
-        }
-    },(error) => {
-      console.log("error");
-    });
-  }
+  // getComments(post_id:number, page:number=1, sort:string) {
+  //   console.log(post_id);
+  //   let url:string='comments?_embed&page='+page + '&post=' + post_id;
+  //   url+=sort=='1'? '&order=asc': '';
+  //   console.log(url);
+  //   return this.get(url)
+  //   .subscribe((data:any) => {
+  //     // console.log(data);
+  //     if(this.comments.length===10){
+  //     this.comments = this.comments.concat(data);
+  //     page++;
+  //       }
+  //   },(error) => {
+  //     console.log("error");
+  //   });
+  // }
 }

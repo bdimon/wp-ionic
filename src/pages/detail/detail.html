@@ -54,7 +54,7 @@
     <div *ngIf="isLoading && page==1"  text-center padding>
     <ion-spinner></ion-spinner>
   </div>
-  <ion-infinite-scroll (ionInfinite)="api.getComments($event)">
+  <ion-infinite-scroll (ionInfinite)="getComments($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
   </ion-list>

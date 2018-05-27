@@ -19,11 +19,11 @@ export class DetailPage {
   public items: any =[];
   public post: any = [];
   public commentsCount: number;
-  public isLoading: boolean=false;
+  private isLoading: boolean=false;
   // public relatedItems: any=[];
   public comments: any=[];
   public page:number = 1;
-  // private sort:string='1';
+  private sort:string='1';
   public showMore: boolean = false;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: ApiProvider) {
@@ -42,35 +42,52 @@ export class DetailPage {
     // while(this.comments.length < this.commentsCount);
    }
 
+   changeSort() {
+    console.log(this.sort);
+      this.comments=[];
+      this.page=1;
+      // this.showMore=false;
+      this.getHeaders();
+    } 
+
   getPost() {
       let url:string='posts?_embed&post='+this.post.id;
       this.api.get(url)
     .subscribe((data:any) => {
        this.items = data;
       }, (error) => {
-        this.isLoading=false;
+        console.log("error");
     });
   }
 
   getHeaders() {
     this.showMore = true;
-    let url:string='comments?_envelope&page='+this.page + '&post=' + this.post.id + '&order=asc';
+    if(!this.isLoading){
+      this.isLoading = true;
+    
+    let url:string='comments?_envelope&page='+this.page + '&post=' + this.post.id;
+    url += this.sort=='1'? '&order=asc': '';
     return this.api.get(url).
-    subscribe((data:any) => {
-      this.comments = this.comments.concat(data.body);
-      console.log(this.comments);
-      this.commentsCount = data.headers['X-WP-Total'];
-      console.log(this.commentsCount);
+    subscribe((resp:any) => {
+      if (resp.status==200) {
+        this.isLoading = false;
+        console.log(resp.headers['X-WP-Total']);
+      this.comments = this.comments.concat(resp.body);
       this.page++;
-      if(this.comments.length == this.commentsCount){
+      if (this.comments.length == resp.headers['X-WP-Total']){
             this.showMore = false;
             return ;
           }
-
-    }, (error) => {
+          else {
+            this.showMore = true;
+          }
+      } else {console.log("Server error");
+    }}, (error) => {
+      this.isLoading = false;
       this.showMore = false;
       console.log('error');
     });
+  }
   }
 
   // getMoreComments() {
@@ -93,4 +110,5 @@ export class DetailPage {
   //     console.log('error');
   //   });
   // }
+  
 }

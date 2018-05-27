@@ -19,7 +19,7 @@ export class SearchPage {
   public items: any = [];
   private per_page: number= 5;
   private page: number=1;
-  private showLoadMore:boolean = false;
+  private showMore:boolean = false;
   private isLoading:boolean = false;
   searchQuery:string='';
 
@@ -32,22 +32,22 @@ export class SearchPage {
     
   }
   getPosts() {
-    if(!(this.isLoading)&& this.searchQuery.length > 3) {
+    if(!(this.isLoading)&& this.searchQuery.length > 0) {
       this.isLoading=true;
     this.api.get('posts?_embed&per_page=' + this.per_page + '&page='+this.page+'&search='+this.searchQuery )
     .subscribe((data:any) => {
       this.isLoading=false;
       this.items = this.items.concat(data);
       if(data.length===this.per_page){
-        this.showLoadMore=true;
+        this.showMore=true;
         this.page++;
       }else{
-        this.showLoadMore=false;
+        this.showMore=false;
       }
     }, (error) => {
       this.isLoading=false;
       if(error.error.code==='rest_post_invalid_page_number') {
-        this.showLoadMore=false;
+        this.showMore=false;
       }
       
       console.log(error);
@@ -63,7 +63,7 @@ export class SearchPage {
     this.searchQuery = '';
     this.items = [];
     this.page = 1;
-    this.showLoadMore = false;
+    this.showMore = false;
   }
   openDetail(item) {
     this.navCtrl.push(DetailPage, {post:item})

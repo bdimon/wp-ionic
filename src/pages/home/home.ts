@@ -11,7 +11,7 @@ import { SearchPage } from '../search/search';
 export class HomePage {
   public items: any = [];
   private page: number=1;
-  private showMore:boolean = false;
+  // private showMore:boolean = false;
   private isLoading:boolean = false;
   private category_id:number=0;
   private sort:string='0';
@@ -59,7 +59,7 @@ export class HomePage {
     console.log(this.sort);
     this.items=[];
     this.page=1;
-    this.showMore=false;
+    // this.showMore=false;
     this.getPosts();
   }
 

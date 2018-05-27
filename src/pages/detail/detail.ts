@@ -34,12 +34,12 @@ export class DetailPage {
     }
     
   ionViewDidLoad() {
-    this.getHeaders();
-    do {
-      this.getMoreComments();
-      
-    }
-    while(this.comments.length < this.commentsCount);
+    
+    
+      this.getHeaders();
+      // this.getMoreComments();
+    
+    // while(this.comments.length < this.commentsCount);
    }
 
   getPost() {
@@ -57,30 +57,40 @@ export class DetailPage {
     let url:string='comments?_envelope&page='+this.page + '&post=' + this.post.id + '&order=asc';
     return this.api.get(url).
     subscribe((data:any) => {
+      this.comments = this.comments.concat(data.body);
+      console.log(this.comments);
       this.commentsCount = data.headers['X-WP-Total'];
-      // console.log(this.countComments);
+      console.log(this.commentsCount);
+      this.page++;
+      if(this.comments.length == this.commentsCount){
+            this.showMore = false;
+            return ;
+          }
 
     }, (error) => {
+      this.showMore = false;
       console.log('error');
     });
   }
 
-  getMoreComments() {
-    // let page = (this.comments.length%10);
-    this.showMore = true;
-    console.log(this.showMore);
-    let url:string='comments?_embed&page='+this.page + '&post=' + this.post.id + '&order=asc';
-    this.api.get(url).
-    subscribe((data:any) => {
-     this.comments  = this.comments.concat(data);
-     console.log(this.commentsCount);
-    //  this.comments.length = this.comments.length - 10;
-     console.log(this.comments.length);
-     this.page++;
-     if(this.comments.length == this.commentsCount){this.showMore = false;
-      return ;
-    }}, (error) => {
-      console.log('error');
-    });
-  }
+  // getMoreComments() {
+  //   // let page = (this.comments.length%10);
+  //   this.showMore = true;
+  //   console.log(this.showMore);
+  //   let url:string='comments?_embed&page='+this.page + '&post=' + this.post.id + '&order=asc';
+  //   this.api.get(url).
+  //   subscribe((data:any) => {
+  //    this.comments  = this.comments.concat(data);
+  //    console.log(this.commentsCount);
+  //   //  this.comments.length = this.comments.length - 10;
+  //    console.log(this.comments.length);
+  //    this.page++;
+  //    if(this.comments.length == this.commentsCount){
+  //     this.showMore = false;
+  //     return ;
+  //   }}, (error) => {
+  //     this.showMore = false;
+  //     console.log('error');
+  //   });
+  // }
 }

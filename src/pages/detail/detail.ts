@@ -27,10 +27,11 @@ export class DetailPage {
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: ApiProvider) {
     this.post = navParams.get('post');
+    this.getStatus();
     }
     
   ionViewWillEnter() {
-    this.getStatus();
+    
     this.getHeaders();
     }
 

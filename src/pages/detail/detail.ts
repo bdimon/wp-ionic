@@ -18,6 +18,7 @@ import { InfiniteScroll } from 'ionic-angular/components/infinite-scroll/infinit
 export class DetailPage {
   public items: any =[];
   public post: any = [];
+  public commentsCount: number;
   public isLoading: boolean=false;
   // public relatedItems: any=[];
   public comments: any=[];
@@ -32,13 +33,14 @@ export class DetailPage {
     // this.api.getComments(this.post.id, this.page, this.sort);
     }
     
-  // ionViewDidLoad() {
+  ionViewDidLoad() {
+    this.getHeaders();
+    do {
+      this.getMoreComments();
+    }
+    while(this.comments.length < this.commentsCount);
     
-        
-    
-  // //   // this.getMoreComments();
-    
-  // }
+  }
 
   getPost() {
       let url:string='posts?_embed&post='+this.post.id;
@@ -50,11 +52,13 @@ export class DetailPage {
     });
   }
 
-  getComments() {
-    let url:string='comments?_embed&page='+this.page + '&post=' + this.post.id + '&order=asc';
+  getHeaders() {
+    let url:string='comments?_envelope&page='+this.page + '&post=' + this.post.id + '&order=asc';
     return this.api.get(url).
     subscribe((data:any) => {
-      this.comments = data;
+      this.commentsCount = data.headers['X-WP-Total'];
+      // console.log(this.countComments);
+
     }, (error) => {
       console.log('error');
     });
@@ -62,13 +66,14 @@ export class DetailPage {
 
   getMoreComments() {
     let page = (this.comments.length%10);
-    console.log(page);
+    // console.log(page);
     let url:string='comments?_embed&page='+this.page + '&post=' + this.post.id + '&order=asc';
     this.api.get(url).
     subscribe((data:any) => {
      this.comments  = this.comments.concat(data);
+     console.log(this.commentsCount);
     //  this.comments.length = this.comments.length - 10;
-     console.log(this.comments.length%10);
+     console.log(this.comments.length);
      this.page++;
      if(this.comments.length%10 != 0){
       return ;

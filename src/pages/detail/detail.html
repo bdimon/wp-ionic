@@ -49,7 +49,7 @@
       <p [innerHtml]="comment.content.rendered"></p>
     </ion-list>
   </div>
-  <button ion-button full (click)="getMoreComments()">Load more...</button>
+  <button *ngIf="showMore" ion-button full (click)="getMoreComments()">Load more...</button>
     <!-- <div *ngIf="isLoading && page==1"  text-center padding>
     <ion-spinner></ion-spinner>
   </div> -->

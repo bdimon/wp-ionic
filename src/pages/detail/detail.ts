@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
-import { InfiniteScroll } from 'ionic-angular/components/infinite-scroll/infinite-scroll';
+// import { InfiniteScroll } from 'ionic-angular/components/infinite-scroll/infinite-scroll';
 
 
 /**
@@ -37,10 +37,10 @@ export class DetailPage {
     this.getHeaders();
     do {
       this.getMoreComments();
+      
     }
     while(this.comments.length < this.commentsCount);
-    
-  }
+   }
 
   getPost() {
       let url:string='posts?_embed&post='+this.post.id;
@@ -53,6 +53,7 @@ export class DetailPage {
   }
 
   getHeaders() {
+    this.showMore = true;
     let url:string='comments?_envelope&page='+this.page + '&post=' + this.post.id + '&order=asc';
     return this.api.get(url).
     subscribe((data:any) => {
@@ -65,8 +66,9 @@ export class DetailPage {
   }
 
   getMoreComments() {
-    let page = (this.comments.length%10);
-    // console.log(page);
+    // let page = (this.comments.length%10);
+    this.showMore = true;
+    console.log(this.showMore);
     let url:string='comments?_embed&page='+this.page + '&post=' + this.post.id + '&order=asc';
     this.api.get(url).
     subscribe((data:any) => {
@@ -75,7 +77,7 @@ export class DetailPage {
     //  this.comments.length = this.comments.length - 10;
      console.log(this.comments.length);
      this.page++;
-     if(this.comments.length%10 != 0){
+     if(this.comments.length == this.commentsCount){this.showMore = false;
       return ;
     }}, (error) => {
       console.log('error');

@@ -28,13 +28,13 @@
     <div padding [innerHTML]= "post.content.rendered"></div>
   </div>
   
-  <ion-row>
+  <!-- <ion-row>
     <ion-label text-right>Sort</ion-label>
     <ion-select [(ngModel)]="sort" (ionChange)="changeSort()">
       <ion-option value="0">New to old</ion-option>
       <ion-option value="1">Old to new</ion-option>
     </ion-select>
-  </ion-row>
+  </ion-row> -->
   <!-- <ion-refresher ion-item (ionRefresh)="api.getMoreComments($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher> -->
@@ -42,7 +42,7 @@
     <ion-item-divider>Comments</ion-item-divider>
     <ion-list text-wrap *ngFor="let comment of comments">
       <ion-avatar>
-        <img src="{{comment.author_avatar_urls[48]}}"/>
+        <img src="{{comment.author_avatar_urls[24]}}"/>
       </ion-avatar>
       <h4>{{comment.author_name}}</h4>
       <h5 light>{{comment.date | date: "dd.MM.yyy / HH:mm"}}</h5>
@@ -51,12 +51,12 @@
   </div>
   <!-- <div *ngIf="isLoading"  text-center padding>
     <ion-spinner></ion-spinner>
-  </div>
-  <button *ngIf="showMore" ion-button full (click)="getHeaders()">Load more...</button> -->
+  </div> -->
+  <button *ngIf="showMore"  ion-button full (click)="getComments()">Load more...</button>
     
-  <ion-infinite-scroll (ionInfinite)="getHeaders($event)">
+  <!-- <ion-infinite-scroll (ionInfinite)="getHeaders($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+  </ion-infinite-scroll> -->
   </ion-content>
    
   

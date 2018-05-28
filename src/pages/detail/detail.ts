@@ -23,17 +23,17 @@ export class DetailPage {
   public comments: any=[];
   public page:number=1;
   private sort:string='1';
-  public showMore: boolean = true;
+  public showMore: boolean = false;
   public pages: number=1;
   public count:number=0;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public api: ApiProvider) {
     this.post = navParams.get('post');
-    this.getComments();
+    
     }
     
-  ionViewWillEnter() {
-    
+  ionViewDidLoad() {
+    this.getComments();
     // this.getStatus();
     // this.getHeaders();
     }
@@ -92,25 +92,34 @@ export class DetailPage {
   // }
   // }
 
-  getComments() {
+  getComments(infiniteScroll = null) {
+    this.showMore = true;
+    if(!this.isLoading) {
+      this.isLoading= true;
     let url:string = 'comments?_envelope&post='+this.post.id+'&page='+this.page+'&order=asc';
-    console.log(url);
-      this.api.get(url)
+    this.api.get(url)
     .subscribe((resp:any) => {
-      this.comments = this.comments.concat(resp.body);
-      
-      console.log(resp.headers['X-WP-TotalPages']);
-      this.count = resp.headers['X-WP-Total'];
-      console.log(this.count);
-      this.pages = resp.headers['X-WP-TotalPages'];
-      this.page++;
-      if(resp.headers['X-WP-TotalPages']==this.page-1) {
-        this.showMore = false;
+      if(resp.body.length==0) {
+        this.isLoading=false;
+        if(infiniteScroll != null) {
+          infiniteScroll.complete();
+          this.showMore = false;
+          return;
+        }
       }
-    }
-  );
-  
+      this.isLoading=false;
+      this.comments = this.comments.concat(resp.body);
+      this.page++;
+      if(infiniteScroll != null){
+         infiniteScroll.complete()
+        }
+      }, (error) => {
+        if(infiniteScroll != null){
+          infiniteScroll.complete();
+        }
+      this.isLoading=false;
+      });
     } 
   }
-  
+}  
 

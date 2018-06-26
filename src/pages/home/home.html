@@ -28,8 +28,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-card *ngFor = "let item of items" (click)="openDetail(item)" >
-   <!-- <img  src = "{{item._embedded['wp:featuredmedia'][0].media_details.sizes.thumbnail.source_url}}"/> -->
-  <ion-card-content>
+   <ion-card-content>
     <ion-card-title align="center" [innerHTML]= "item.title.rendered"></ion-card-title>
     <ion-row>
       <ion-badge color="secondary">

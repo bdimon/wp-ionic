@@ -9,18 +9,16 @@ import { DetailPage } from './../detail/detail';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
-// @IonicPage()
 @Component({
   selector: 'page-search',
   templateUrl: 'search.html',
 })
 export class SearchPage {
   public items: any = [];
-  private per_page: number= 5;
-  private page: number=1;
-  private showMore:boolean = false;
-  private isLoading:boolean = false;
+  public per_page: number= 5;
+  public page: number=1;
+  public showMore:boolean = false;
+  public isLoading:boolean = false;
   searchQuery:string='';
 
   constructor(public navCtrl: NavController,

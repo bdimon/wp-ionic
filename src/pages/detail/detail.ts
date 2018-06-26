@@ -19,10 +19,10 @@ export class DetailPage {
   public items: any =[];
   public post: any = [];
   public commentsCount: number;
-  private isLoading: boolean=false;
+  public isLoading: boolean=false;
   public comments: any=[];
   public page:number=1;
-  private sort:string='1';
+  public sort:string='1';
   public showMore: boolean = false;
   public pages: number=1;
   public count:number=0;
@@ -34,64 +34,9 @@ export class DetailPage {
     
   ionViewDidLoad() {
     this.getComments();
-    // this.getStatus();
-    // this.getHeaders();
     }
 
-  //  changeSort() {
-  //   console.log(this.sort);
-  //     this.comments=[];
-  //     this.page=1;
-  //     this.getHeaders();
-  //   }
-
-  //   getStatus() {
-  //     let url:string='comments?_envelope&post=' + this.post.id+'&page='+this.page;
-  //     this.api.get(url).subscribe((resp:any) => {
-  //     if (resp.status==200) {
-  //       // return commentsCount = resp.headers['X-WP-Total'];
-  //       console.log(resp.headers['X-WP-Total']);
-  //       console.log(resp.headers['X-WP-TotalPages']);
-  //       this.pages=(resp.headers['X-WP-TotalPages']);
-  //     }
-  //   });
-  // }
-
-  //  getHeaders(infiniteScroll=null) {
-  //   this.showMore = true;
-  //   if(!this.isLoading){
-  //     this.isLoading = true;
-  //     this.page=this.pages ;
-  //     console.log(this.page);
-  //     let url:string='comments?_embed&page='+this.page + '&post=' + this.post.id;
-  //   url += this.sort=='1'? '&order=asc#': '';
-  //   console.log(url);
-  //   this.api.get(url).
-  //   subscribe((resp:any) => {
-  //     this.isLoading = false;
-  //     this.comments = this.comments.concat(resp);
-  //     this.page--;
-  //     // if (this.comments.length == this.commentsCount){
-  //     //       this.showMore = false;
-            
-  //     //       return ;            
-  //     //       }
-  //     //       else {
-  //           this.showMore = true;
-  //           if (infiniteScroll!=null){
-  //           infiniteScroll.complete();
-  //         }
-          
-  //         }
-      
-  //   , (error) => {
-  //     this.isLoading = false;
-  //     this.showMore = false;
-  //     console.log('error');
-  //   });
-  // }
-  // }
-
+ 
   getComments(infiniteScroll = null) {
     this.showMore = true;
     if(!this.isLoading) {

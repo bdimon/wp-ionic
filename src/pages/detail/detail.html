@@ -3,13 +3,10 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <!-- <ion-title text-center padding [innerHTML]= "post.title.rendered"></ion-title> -->
-  </ion-navbar>
+    </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-<!-- <img  src = "{{post._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url}}"/> -->
-
 <div padding>
     <h1 text-center [innerHTML]= "post.title.rendered"></h1>
     <ion-row>
@@ -27,17 +24,6 @@
     </ion-row>
     <div padding [innerHTML]= "post.content.rendered"></div>
   </div>
-  
-  <!-- <ion-row>
-    <ion-label text-right>Sort</ion-label>
-    <ion-select [(ngModel)]="sort" (ionChange)="changeSort()">
-      <ion-option value="0">New to old</ion-option>
-      <ion-option value="1">Old to new</ion-option>
-    </ion-select>
-  </ion-row> -->
-  <!-- <ion-refresher ion-item (ionRefresh)="api.getMoreComments($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher> -->
   <div *ngIf ="this.comments">
     <ion-item-divider>Comments</ion-item-divider>
     <ion-list text-wrap *ngFor="let comment of comments">
@@ -52,8 +38,7 @@
   <div *ngIf="isLoading&&page===1"  text-center padding>
     <ion-spinner></ion-spinner>
   </div>
-  <!-- <button *ngIf="showMore"  ion-button full (click)="getComments()">Load more...</button> -->
-    
+  
   <ion-infinite-scroll [enabled]="showMore" (ionInfinite)="getComments($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>

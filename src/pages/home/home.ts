@@ -10,11 +10,10 @@ import { SearchPage } from '../search/search';
 })
 export class HomePage {
   public items: any = [];
-  private page: number=1;
-  // private showMore:boolean = false;
-  private isLoading:boolean = false;
-  private category_id:number=0;
-  private sort:string='0';
+  public page: number=1;
+  public isLoading:boolean = false;
+  public category_id:number=0;
+  public sort:string='0';
 
   constructor(public navCtrl: NavController,
      public api: ApiProvider,

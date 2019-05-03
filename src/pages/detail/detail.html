@@ -7,6 +7,7 @@
 </ion-header>
 
 <ion-content padding>
+    <img  src = "{{post._embedded['wp:featuredmedia'][0].media_details.sizes['medium'].source_url}}"/>
 <div padding>
     <h1 text-center [innerHTML]= "post.title.rendered"></h1>
     <ion-row>

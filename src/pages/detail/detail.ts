@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
-import { InfiniteScroll } from 'ionic-angular/components/infinite-scroll/infinite-scroll';
+//import { InfiniteScroll } from 'ionic-angular/components/infinite-scroll/infinite-scroll';
 
 
 /**

@@ -73,25 +73,18 @@ export class HomePage {
     }
   }
   getMedia() {
-    if (!this.isLoading) {
-      this.isLoading = true;
-      let url: string = "posts?_embed";
-      url += "featured_media";
-      console.log(this.featured_media);
+    let url: string = "posts?_embed";
+    url += "featured_media";
+    console.log(this.featured_media);
 
-      this.api.get(url).subscribe(
-        (data: any) => {
-          this.isLoading = false;
-          this.items = this.items.concat(data);
-          if (data.length === 10) {
-            this.page++;
-          }
-        },
-        (error) => {
-          this.isLoading = false;
-        }
-      );
-    }
+    this.api.get(url).subscribe(
+      (data: any) => {
+        this.items = this.items.concat(data);
+      },
+      (error) => {
+        this.isLoading = false;
+      }
+    );
   }
   changeSort() {
     console.log(this.sort);

@@ -24,7 +24,10 @@
       </ion-select>
     </ion-item>
   </ion-row>
-  <ion-refresher (ionRefresh)="getPosts($event)">
+  <ion-refresher
+    (ionRefresh)="getPosts($event)"
+    (ionRefresh)="getMedia($event)"
+  >
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-card *ngFor="let item of items" (click)="openDetail(item)">

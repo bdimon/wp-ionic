@@ -77,7 +77,7 @@ export class HomePage {
       this.isLoading = true;
       let url: string = "posts?_embed";
       url += "featured_media";
-      console.log(url);
+      console.log(this.featured_media);
 
       this.api.get(url).subscribe(
         (data: any) => {
